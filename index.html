@@ -5,18 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>شبكة 09 – بوابة تصاريح الأعمال</title>
   <meta name="description" content="لوحة وصول سريعة لتصاريح الأعمال وموارد السلامة (GWP, WAH, CSE, EXC, HWP, LOP) مع روابط مباشرة ونسخ سريع ورموز QR.">
+
+  <!-- (2) فاف آيكون + لون المتصفح + تحسين التحميل -->
+  <link rel="icon" href="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
+  <meta name="theme-color" content="#0ea5e9">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+
+  <!-- مكتبات الواجهة (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- (6) لمسات احترافية: ألوان علامة تجارية + OG tags + تحسينات وصول -->
+  <meta property="og:title" content="شبكة 09 – بوابة تصاريح الأعمال">
+  <meta property="og:description" content="وصول سريع للنماذج وموارد السلامة مع رموز QR.">
+  <meta property="og:image" content="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
+  <meta name="twitter:card" content="summary">
   <style>
-    body { background: #f7fafc; }
-    .hero-bg { background-image: url('https://drive.google.com/uc?export=view&id=1Hdy2MDxIttYP7t7vrhI9vyX92KxqhwLw'); background-size: cover; background-position: center; }
+    :root { --brand:#0ea5e9; --brand-dark:#0284c7; }
+    body { background:#f7fafc; }
+    /* (1) خلفية مع تفضيل الصورة الجديدة + تراجع للأقدم */
+    .hero-bg {
+      background-image:
+        url('https://drive.google.com/uc?export=view&id=1hCbksuVUTvwczBOJTE2aJ17sgg3EKnFp'),
+        url('https://drive.google.com/uc?export=view&id=1Hdy2MDxIttYP7t7vrhI9vyX92KxqhwLw');
+      background-size: cover; background-position: center;
+      min-height: 220px;
+      border-radius: 1.5rem;
+    }
+    .btn-primary { background:var(--brand); color:#fff; }
+    .btn-primary:hover { background:var(--brand-dark); }
   </style>
 </head>
 <body class="text-slate-900">
+  <!-- Header -->
   <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <img src="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO" alt="Logo" class="w-10 h-10 rounded-xl ring-2 ring-sky-200 object-contain bg-white p-1" />
+        <!-- (1) شعار الشركة من Google Drive (رابط مباشر) -->
+        <img loading="lazy" src="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO" alt="Logo" class="w-10 h-10 rounded-xl ring-2 ring-sky-200 object-contain bg-white p-1" />
         <div>
           <h1 class="font-extrabold text-xl leading-5">شبكة 09 – بوابة تصاريح الأعمال</h1>
           <p class="text-xs text-slate-500">PTW Center</p>
@@ -26,19 +53,20 @@
     </div>
   </header>
 
-  <section class="hero-bg">
-    <div class="max-w-6xl mx-auto px-4 py-10">
-      <div class="bg-white/90 border shadow rounded-3xl p-6">
-        <h2 class="text-2xl md:text-3xl font-black mb-2">لوحة الوصول السريع لتصاريح الأعمال</h2>
-        <p class="text-slate-600 mb-4">روابط مباشرة، نسخ سريع، ورموز QR جاهزة للطباعة والمشاركة.</p>
-        <div class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
-          <input id="search" type="search" placeholder="ابحث باسم التصريح أو الكود (GWP, WAH, …)" class="w-full md:w-96 h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-sky-300" />
-        </div>
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-4 py-6">
+    <div class="hero-bg"></div>
+    <div class="mt-4 bg-white/95 border shadow rounded-3xl p-6">
+      <h2 class="text-2xl md:text-3xl font-black mb-2">لوحة الوصول السريع لتصاريح الأعمال</h2>
+      <p class="text-slate-600 mb-4">روابط مباشرة، نسخ سريع، ورموز QR جاهزة للطباعة والمشاركة.</p>
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
+        <input id="search" type="search" placeholder="ابحث باسم التصريح أو الكود (GWP, WAH, …)" class="w-full md:w-96 h-10 rounded-xl border px-3 outline-none focus:ring-2 focus:ring-sky-300" />
       </div>
     </div>
   </section>
 
+  <!-- Grid -->
   <main class="max-w-6xl mx-auto px-4 pb-12">
     <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"></div>
 
@@ -50,6 +78,7 @@
     <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> شبكة 09 – جميع الحقوق محفوظة</footer>
   </main>
 
+  <!-- QR Modal -->
   <div id="qrModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
     <div class="bg-white rounded-2xl p-5 w-full max-w-sm">
       <div class="flex items-center justify-between mb-3">
@@ -93,15 +122,15 @@
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-2">
                 <div class="min-w-0">
-                  <h3 class="font-bold text-base truncate">${item.titleAr}</h3>
-                  <p class="text-[11px] text-slate-500 truncate">${item.title}</p>
+                  <h3 class="font-bold text-base truncate">{item.titleAr}</h3>
+                  <p class="text-[11px] text-slate-500 truncate">{item.title}</p>
                 </div>
-                <span class="text-[10px] px-2 py-1 rounded-full bg-slate-100">${item.tag}</span>
+                <span class="text-[10px] px-2 py-1 rounded-full bg-slate-100">{item.tag}</span>
               </div>
               <div class="mt-3 flex items-center gap-2 flex-wrap">
-                <a href="${item.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-sky-600 text-white hover:bg-sky-700">فتح النموذج</a>
-                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('${item.href}')">نسخ الرابط</button>
-                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border" onclick="openQR('${item.titleAr}','${item.href}')">QR</button>
+                <a href="{item.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl btn-primary">فتح النموذج</a>
+                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('{item.href}')">نسخ الرابط</button>
+                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border" onclick="openQR('{item.titleAr}','{item.href}')">QR</button>
               </div>
             </div>
           </div>`;
@@ -118,11 +147,11 @@
           <div class="flex items-start gap-3">
             <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500 via-cyan-500 to-teal-500 text-white grid place-items-center shadow">🔗</div>
             <div class="flex-1 min-w-0">
-              <h4 class="font-bold text-base truncate">${r.titleAr}</h4>
-              <p class="text-[11px] text-slate-500 truncate">${r.title}</p>
+              <h4 class="font-bold text-base truncate">{r.titleAr}</h4>
+              <p class="text-[11px] text-slate-500 truncate">{r.title}</p>
               <div class="mt-3 flex items-center gap-2 flex-wrap">
-                <a href="${r.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-sky-600 text-white hover:bg-sky-700">فتح الرابط</a>
-                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('${r.href}')">نسخ الرابط</button>
+                <a href="{r.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl btn-primary">فتح الرابط</a>
+                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('{r.href}')">نسخ الرابط</button>
               </div>
             </div>
           </div>`;
@@ -130,6 +159,7 @@
       });
     }
 
+    // QR Modal
     const modal = document.getElementById('qrModal');
     const qrBox = document.getElementById('qrBox');
     const qrTitle = document.getElementById('qrTitle');
@@ -144,6 +174,7 @@
     }
     window.openQR = openQR;
 
+    // Search
     function applyFilter(){
       const q = (search.value || '').toLowerCase();
       const f = data.filter(d => [d.id, d.title, d.titleAr, d.tag].join(' ').toLowerCase().includes(q));
@@ -151,6 +182,7 @@
     }
     search.addEventListener('input', applyFilter);
 
+    // Init
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ar-EG');
     render(data);

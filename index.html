@@ -5,12 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>شبكة 09 – بوابة تصاريح الأعمال</title>
   <meta name="description" content="لوحة وصول سريعة لتصاريح الأعمال وموارد السلامة (GWP, WAH, CSE, EXC, HWP, LOP) مع روابط مباشرة ونسخ سريع ورموز QR.">
+
+  <!-- (2) فاف آيكون + لون للمتصفح -->
   <link rel="icon" href="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
   <meta name="theme-color" content="#0ea5e9">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+
+  <!-- مكتبات واجهة -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- (6) لمسات احترافية -->
   <meta property="og:title" content="شبكة 09 – بوابة تصاريح الأعمال">
   <meta property="og:description" content="وصول سريع للنماذج وموارد السلامة مع رموز QR.">
   <meta property="og:image" content="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
@@ -18,7 +24,8 @@
   <style>
     :root { --brand:#0ea5e9; --brand-dark:#0284c7; }
     body { background:#f7fafc; }
-    .hero-bg {
+    /* (1) خلفية: يفضّل الصورة الجديدة مع تراجع للأقدم + تدرّج احتياطي */
+    .hero-bg{
       background-image:
         linear-gradient(180deg, rgba(14,165,233,0.08), rgba(14,165,233,0)),
         url('https://drive.google.com/uc?export=view&id=1hCbksuVUTvwczBOJTE2aJ17sgg3EKnFp'),
@@ -26,11 +33,12 @@
       background-size: cover; background-position: center;
       min-height: 220px; border-radius: 1.5rem;
     }
-    .btn-primary { background:var(--brand); color:#fff; }
-    .btn-primary:hover { background:var(--brand-dark); }
+    .btn-primary{ background:var(--brand); color:#fff; }
+    .btn-primary:hover{ background:var(--brand-dark); }
   </style>
 </head>
 <body class="text-slate-900">
+  <!-- Header -->
   <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -44,6 +52,7 @@
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="max-w-6xl mx-auto px-4 py-6">
     <div class="hero-bg"></div>
     <div class="mt-4 bg-white/95 border shadow rounded-3xl p-6">
@@ -56,6 +65,7 @@
     </div>
   </section>
 
+  <!-- Grid -->
   <main class="max-w-6xl mx-auto px-4 pb-12">
     <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"></div>
 
@@ -67,6 +77,7 @@
     <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> شبكة 09 – جميع الحقوق محفوظة</footer>
   </main>
 
+  <!-- QR Modal -->
   <div id="qrModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
     <div class="bg-white rounded-2xl p-5 w-full max-w-sm">
       <div class="flex items-center justify-between mb-3">
@@ -79,6 +90,7 @@
   </div>
 
   <script>
+    // بيانات التصاريح
     const data = [
       { id: 'PTW-GWP', titleAr: 'تصريح عمل عام (GWP)', title: 'PTW – GWP', tag: 'GWP', href: 'https://tinyurl.com/PTW-GWP' },
       { id: 'WAH-PTW', titleAr: 'تصريح العمل على ارتفاع (WAH)', title: 'PTW – WAH', tag: 'WAH', href: 'https://tinyurl.com/WAH-PTW' },
@@ -147,6 +159,7 @@
       });
     }
 
+    // QR Modal
     const modal = document.getElementById('qrModal');
     const qrBox = document.getElementById('qrBox');
     const qrTitle = document.getElementById('qrTitle');
@@ -161,6 +174,7 @@
     }
     window.openQR = openQR;
 
+    // بحث
     function applyFilter(){
       const q = (search.value || '').toLowerCase();
       const f = data.filter(d => [d.id, d.title, d.titleAr, d.tag].join(' ').toLowerCase().includes(q));
@@ -168,6 +182,7 @@
     }
     search.addEventListener('input', applyFilter);
 
+    // Init
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ar-EG');
     render(data);

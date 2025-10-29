@@ -3,58 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> بوابة تصاريح الأعمال  </title>
+  <title>شبكة 09 – بوابة تصاريح الأعمال</title>
   <meta name="description" content="لوحة وصول سريعة لتصاريح الأعمال وموارد السلامة (GWP, WAH, CSE, EXC, HWP, LOP) مع روابط مباشرة ونسخ سريع ورموز QR.">
 
-  <!-- (2) فاف آيكون + لون للمتصفح -->
-  <link rel="icon" href="assets/logo.png?v=2">
+  <!-- فاف آيكون + لون متصفح -->
+  <link id="favicon" rel="icon" href="assets/logo.png">
   <meta name="theme-color" content="#0ea5e9">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
 
   <!-- مكتبات واجهة -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-  <!-- (6) لمسات احترافية -->
-  <meta property="og:title" content=" بوابة تصاريح الأعمال لمشروع إنشاء مبنى إداري ومبنى التحكم بمحطة كهرباء نجران">
+  <!-- OG -->
+  <meta property="og:title" content="شبكة 09 – بوابة تصاريح الأعمال">
   <meta property="og:description" content="وصول سريع للنماذج وموارد السلامة مع رموز QR.">
-  <meta property="og:image" content="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="assets/logo.png">
+
   <style>
     :root { --brand:#0ea5e9; --brand-dark:#0284c7; }
     body { background:#f7fafc; }
-    /* (1) خلفية: يفضّل الصورة الجديدة مع تراجع للأقدم + تدرّج احتياطي */
     .hero-bg{
-  background-image:
-    linear-gradient(180deg, rgba(14,165,233,0.08), rgba(14,165,233,0)),
-    url('assets/hero.png?v=2');
-  background-size: cover;
-  background-position: center;
-  min-height: 220px;
-  border-radius: 1.5rem;
-}
+      /* تدرّج خفيف + خلفية بمسارين (assets ثم الجذر) */
+      background-image:
+        linear-gradient(180deg, rgba(14,165,233,0.08), rgba(14,165,233,0)),
+        url('assets/hero.png'), url('./hero.png');
+      background-size: cover; background-position: center;
+      min-height: 220px; border-radius: 1.5rem;
+    }
     .btn-primary{ background:var(--brand); color:#fff; }
     .btn-primary:hover{ background:var(--brand-dark); }
   </style>
 </head>
 <body class="text-slate-900">
   <!-- Header -->
- <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <!-- اللوجو من داخل الريبو -->
-     <img loading="lazy" src="assets/logo.png?v=2" alt="Logo"
-     class="w-10 h-10 rounded-xl ring-2 ring-sky-200 object-contain bg-white p-1" />
-      <div>
-        <h1 class="font-extrabold text-xl leading-5">بوابة تصاريح الأعمال</h1>
-        <p class="text-xs text-slate-500">PTW Center</p>
+  <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- اللوجو مع fallback تلقائي -->
+        <img id="logo" loading="lazy" src="assets/logo.png" alt="Logo"
+             class="w-10 h-10 rounded-xl ring-2 ring-sky-200 object-contain bg-white p-1" />
+        <div>
+          <h1 class="font-extrabold text-xl leading-5">شبكة 09 – بوابة تصاريح الأعمال</h1>
+          <p class="text-xs text-slate-500">PTW Center</p>
+        </div>
       </div>
+      <span class="hidden md:inline text-xs text-slate-500">آخر تحديث: <span id="lastUpdate"></span></span>
     </div>
-    <span class="hidden md:inline text-xs text-slate-500">آخر تحديث: <span id="lastUpdate"></span></span>
-  </div>
-</header>
-
+  </header>
 
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-4 py-6">
@@ -78,7 +73,7 @@
       <div id="resources" class="grid sm:grid-cols-2 gap-4"></div>
     </section>
 
-    <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> جميع الحقوق محفوظة Ahmed El-Basha</footer>
+    <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> شبكة 09 – جميع الحقوق محفوظة</footer>
   </main>
 
   <!-- QR Modal -->
@@ -94,14 +89,20 @@
   </div>
 
   <script>
+    // --- Fallback تلقائي للّوجو والـfavicon من الجذر لو assets مش موجودة
+    const logoEl = document.getElementById('logo');
+    logoEl.addEventListener('error', () => { logoEl.src = './logo.png?v=2'; });
+    const fav = document.getElementById('favicon');
+    fav.addEventListener('error', () => { fav.href = './logo.png?v=2'; });
+
     // بيانات التصاريح
     const data = [
       { id: 'PTW-GWP', titleAr: 'تصريح عمل عام (GWP)', title: 'PTW – GWP', tag: 'GWP', href: 'https://tinyurl.com/PTW-GWP' },
-      { id: 'WAH-PTW', titleAr: 'تصريح العمل على مُرتفعات (WAH)', title: 'PTW – WAH', tag: 'WAH', href: 'https://tinyurl.com/WAH-PTW' },
-      { id: 'ELBASHA-CSE', titleAr: 'تصريح الدخول للأماكن المغلقة (CSE)', title: 'PTW – CSE', tag: 'CSE', href: 'https://tinyurl.com/ELBASHA-CSE' },
+      { id: 'WAH-PTW', titleAr: 'تصريح العمل على ارتفاع (WAH)', title: 'PTW – WAH', tag: 'WAH', href: 'https://tinyurl.com/WAH-PTW' },
+      { id: 'ELBASHA-CSE', titleAr: 'تصريح الدخول للأماكن المغلقة (CSE)', title: 'CSE – Elbasha', tag: 'CSE', href: 'https://tinyurl.com/ELBASHA-CSE' },
       { id: 'EXC-PTW', titleAr: 'تصريح الحفر (EXC)', title: 'PTW – Excavation', tag: 'EXC', href: 'https://tinyurl.com/EXC-PTW' },
       { id: 'HWP-PTW', titleAr: 'تصريح الأعمال الساخنة (HWP)', title: 'PTW – Hot Work', tag: 'HWP', href: 'https://tinyurl.com/HWP-PTW' },
-      { id: 'PTW-LOP', titleAr: 'تصريح أعمال الرفع (LOP)', title: 'PTW – LOP', tag: 'LOP', href: 'https://tinyurl.com/PTW-LOP' },
+      { id: 'PTW-LOP', titleAr: 'تصريح العزل والطاقة (LOP/LOTO)', title: 'PTW – LOTO/LOP', tag: 'LOP', href: 'https://tinyurl.com/PTW-LOP' },
     ];
 
     const resources = [
@@ -134,7 +135,8 @@
               <div class="mt-3 flex items-center gap-2 flex-wrap">
                 <a href="${item.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl btn-primary">فتح النموذج</a>
                 <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('${item.href}')">نسخ الرابط</button>
-               </div>
+                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border" onclick="openQR('${item.titleAr}','${item.href}')">QR</button>
+              </div>
             </div>
           </div>`;
         cards.appendChild(el);
@@ -162,7 +164,22 @@
       });
     }
 
-     // بحث
+    // QR Modal
+    const modal = document.getElementById('qrModal');
+    const qrBox = document.getElementById('qrBox');
+    const qrTitle = document.getElementById('qrTitle');
+    const qrLink = document.getElementById('qrLink');
+    document.getElementById('closeQr').onclick = () => { modal.classList.add('hidden'); qrBox.innerHTML = ''; };
+    function openQR(title, href){
+      qrTitle.textContent = 'رمز QR – ' + title;
+      qrLink.textContent = href;
+      qrBox.innerHTML = '';
+      new QRCode(qrBox, { text: href, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+      modal.classList.remove('hidden');
+    }
+    window.openQR = openQR;
+
+    // بحث
     function applyFilter(){
       const q = (search.value || '').toLowerCase();
       const f = data.filter(d => [d.id, d.title, d.titleAr, d.tag].join(' ').toLowerCase().includes(q));

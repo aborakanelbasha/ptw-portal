@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title> بوابة تصاريح الأعمال لمشروع إنشاء مبنى إداري ومبنى التحكم بمحطة كهرباء نجران </title>
+  <title> بوابة تصاريح الأعمال  </title>
   <meta name="description" content="لوحة وصول سريعة لتصاريح الأعمال وموارد السلامة (GWP, WAH, CSE, EXC, HWP, LOP) مع روابط مباشرة ونسخ سريع ورموز QR.">
 
   <!-- (2) فاف آيكون + لون للمتصفح -->
@@ -17,7 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- (6) لمسات احترافية -->
-  <meta property="og:title" content="بوابة تصاريح الأعمال">
+  <meta property="og:title" content=" بوابة تصاريح الأعمال لمشروع إنشاء مبنى إداري ومبنى التحكم بمحطة كهرباء نجران">
   <meta property="og:description" content="وصول سريع للنماذج وموارد السلامة مع رموز QR.">
   <meta property="og:image" content="https://drive.google.com/uc?export=view&id=1gXZXvtClEe0YWAM_EjBfTL_34QQJrfVO">
   <meta name="twitter:card" content="summary">
@@ -78,7 +78,7 @@
       <div id="resources" class="grid sm:grid-cols-2 gap-4"></div>
     </section>
 
-    <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> جميع الحقوق محفوظة</footer>
+    <footer class="mt-10 text-xs text-slate-500 border-t pt-4">© <span id="year"></span> جميع الحقوق محفوظة Ahmed El-Basha</footer>
   </main>
 
   <!-- QR Modal -->
@@ -134,8 +134,7 @@
               <div class="mt-3 flex items-center gap-2 flex-wrap">
                 <a href="${item.href}" target="_blank" class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl btn-primary">فتح النموذج</a>
                 <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="copy('${item.href}')">نسخ الرابط</button>
-                <button class="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border" onclick="openQR('${item.titleAr}','${item.href}')">QR</button>
-              </div>
+               </div>
             </div>
           </div>`;
         cards.appendChild(el);
@@ -163,22 +162,7 @@
       });
     }
 
-    // QR Modal
-    const modal = document.getElementById('qrModal');
-    const qrBox = document.getElementById('qrBox');
-    const qrTitle = document.getElementById('qrTitle');
-    const qrLink = document.getElementById('qrLink');
-    document.getElementById('closeQr').onclick = () => { modal.classList.add('hidden'); qrBox.innerHTML = ''; };
-    function openQR(title, href){
-      qrTitle.textContent = 'رمز QR – ' + title;
-      qrLink.textContent = href;
-      qrBox.innerHTML = '';
-      new QRCode(qrBox, { text: href, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
-      modal.classList.remove('hidden');
-    }
-    window.openQR = openQR;
-
-    // بحث
+     // بحث
     function applyFilter(){
       const q = (search.value || '').toLowerCase();
       const f = data.filter(d => [d.id, d.title, d.titleAr, d.tag].join(' ').toLowerCase().includes(q));

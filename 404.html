@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title> بوابة تصاريح الأعمال</title>
-  <meta name="description" content="وصول سريع لتصاريح الأعمال وموارد السلامة مع بحث، نسخ سريع، وQR جاهز للطباعة.">
+  <meta name="description" content="وصول سريع لتصاريح الأعمال وموارد السلامة مع بحث ونسخ سريع.">
   <meta name="theme-color" content="#0ea5e9"/>
 
   <!-- Google Font (Cairo) -->
@@ -69,7 +69,7 @@
              onerror="this.src='./logo.png'"/>
         <div>
           <h1 class="font-extrabold text-lg lg:text-xl">بوابة تصاريح الأعمال</h1>
-          <p class="text-[11px] text-slate-500 -mt-1">PTW Center · شبكة 09</p>
+          <p class="text-[11px] text-slate-500 -mt-1">PTW Center</p>
         </div>
       </div>
       <span class="hidden md:inline text-xs text-slate-500">آخر تحديث: <span id="lastUpdate"></span></span>
@@ -84,7 +84,7 @@
         <div class="icon-pill">🛡️</div>
         <div>
           <h2 class="text-2xl md:text-3xl font-black">لوحة الوصول السريع لتصاريح الأعمال</h2>
-          <p class="text-slate-600 text-sm">روابط مباشرة، نسخ سريع، و رموز QR جاهزة للطباعة والمشاركة.</p>
+          <p class="text-slate-600 text-sm">روابط مباشرة ونسخ سريع.</p>
         </div>
       </div>
       <div class="mt-4 flex items-center gap-2">
@@ -112,29 +112,16 @@
     </footer>
   </main>
 
-  <!-- QR MODAL -->
-  <div id="qrModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
-    <div class="bg-white rounded-2xl p-5 w-full max-w-sm shadow-xl">
-      <div class="flex items-center justify-between mb-3">
-        <h4 id="qrTitle" class="font-black text-lg">رمز QR</h4>
-        <button id="closeQr" class="text-slate-500 hover:text-slate-700">إغلاق</button>
-      </div>
-      <div id="qrBox" class="w-full grid place-items-center border rounded-xl p-4 bg-white"></div>
-      <p id="qrLink" class="mt-3 text-xs text-slate-600 break-all"></p>
-    </div>
-  </div>
-
   <!-- SCRIPTS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     // بيانات التصاريح
     const permits = [
-      { id:'PTW-GWP',  titleAr:'تصريح عمل عام (GWP)',       title:'PTW – GWP',         tag:'GWP', href:'https://tinyurl.com/PTW-GWP' },
-      { id:'WAH-PTW',  titleAr:'تصريح العمل على ارتفاع (WAH)', title:'PTW – WAH',         tag:'WAH', href:'https://tinyurl.com/WAH-PTW' },
-      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'CSE – Elbasha', tag:'CSE', href:'https://tinyurl.com/ELBASHA-CSE' },
-      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Excavation',  tag:'EXC', href:'https://tinyurl.com/EXC-PTW' },
-      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – Hot Work',    tag:'HWP', href:'https://tinyurl.com/HWP-PTW' },
-      { id:'PTW-LOP',  titleAr:'تصريح أعمال الرفع (LOP)', title:'PTW – LOP', tag:'LOP', href:'https://tinyurl.com/PTW-LOP' },
+      { id:'PTW-GWP',  titleAr:'تصريح عمل عام (GWP)',       title:'PTW – GWP',         tag:'GWP', href:'https://script.google.com/macros/s/AKfycbyWrievOKw_XXJRS2E30P8VsG5f3WjilJoORpfplM0EFuw77zgre8sQwYjnyBHAXKoy/exec' },
+      { id:'WAH-PTW',  titleAr:'تصريح العمل على ارتفاع (WAH)', title:'PTW – WAH',         tag:'WAH', href:'https://script.google.com/macros/s/AKfycbwVaSmrvgSG_KyhHaBGnrVcQVW_trdva1Vkk3d2sxlqjW8RC16iVNikjphQ-TSNyj7X/exec' },
+      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'CSE – Elbasha', tag:'CSE', href:'https://script.google.com/macros/s/AKfycbxFfOIG6s8tDdAArAzmAoYUuqnW0zQGv7RsnQMrdlcwuae30_5FYDSNyvXs2V7JLyX0/exec' },
+      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Excavation',  tag:'EXC', href:'https://script.google.com/macros/s/AKfycbzeNCkVOGRq4I2DAnsP_rwtyJsH95-qrdpDH7SGtU9pKHCssDmGFeMi_LCVAym_pamz/exec' },
+      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – Hot Work',    tag:'HWP', href:'https://script.google.com/macros/s/AKfycbyj16dWBfMwWn5htsSTpgnjJR_VGshTiyn3pYA-_GRKSUUaNmngJIqBl8L2df8nwmKpQw/exec' },
+      { id:'PTW-LOP',  titleAr:'تصريح أعمال الرفع (LOP)', title:'PTW – LOP', tag:'LOP', href:'https://script.google.com/macros/s/AKfycbyqJipVrchzNaCGgyi-vRgmbKZA52uhOguv9eRM46FzJbrj2hxl0rAtqwogA8lqmgorQQ/exec' },
     ];
 
     const extra = [
@@ -152,10 +139,6 @@
       t.textContent=msg; t.style.cssText="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0ea5e9;color:#fff;padding:8px 14px;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.15);font-weight:700;z-index:9999";
       document.body.appendChild(t); setTimeout(()=>t.remove(),1200);
     }
-    function shareWA(title, href){
-      const txt = encodeURIComponent(`تصريح: ${title}\nالرابط: ${href}`);
-      window.open(`https://wa.me/?text=${txt}`,'_blank');
-    }
 
     function card(item){
       const el = document.createElement('div');
@@ -172,10 +155,8 @@
               <span class="chip">${item.tag}</span>
             </div>
             <div class="mt-3 flex items-center gap-2 flex-wrap">
-              <a href="${item.href}" target="_blank" class="btn btn-primary">فتح النموذج</a>
+              <a href="${item.href}" target="_blank" class="btn btn-primary" rel="noopener">فتح النموذج</a>
               <button class="btn btn-ghost" onclick="copy('${item.href}')">نسخ الرابط</button>
-              <button class="btn btn-ghost" onclick="openQR('${item.titleAr}','${item.href}')">QR</button>
-              <button class="btn btn-ghost" onclick="shareWA('${item.titleAr}','${item.href}')">واتساب</button>
             </div>
           </div>
         </div>`;
@@ -192,7 +173,7 @@
             <h4 class="font-bold text-base truncate">${r.titleAr}</h4>
             <p class="text-[11px] text-slate-500 truncate">${r.title}</p>
             <div class="mt-3 flex items-center gap-2">
-              <a href="${r.href}" target="_blank" class="btn btn-primary">فتح الرابط</a>
+              <a href="${r.href}" target="_blank" class="btn btn-primary" rel="noopener">فتح الرابط</a>
               <button class="btn btn-ghost" onclick="copy('${r.href}')">نسخ الرابط</button>
             </div>
           </div>
@@ -203,7 +184,6 @@
     function render(list){ cards.innerHTML=''; list.forEach(i=>cards.appendChild(card(i))); }
     function renderExtra(){ resWrap.innerHTML=''; extra.forEach(x=>resWrap.appendChild(resource(x))); }
 
-   
     // بحث
     function applyFilter(){
       const q = (search.value||'').toLowerCase().trim();

@@ -8,7 +8,12 @@
   <meta name="theme-color" content="#0ea5e9"/>
 
   <!-- Google Font (Cairo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind config (enable dark mode via class) -->
+  <script>window.tailwind=window.tailwind||{}; tailwind.config={ darkMode:'class' };</script>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -25,17 +30,34 @@
       --muted:#64748b;          /* Slate-500 */
       --card:#ffffff;
       --glass: rgba(255,255,255,.6);
+      --bg:#f6f9fc;
+      --border:#e6eef6;
     }
-    html,body{font-family:"Cairo",system-ui,Segoe UI,Roboto,Arial; background:#f6f9fc; color:var(--ink)}
+    .dark{
+      --ink:#e5e7eb;            /* Slate-200 */
+      --muted:#94a3b8;          /* Slate-400 */
+      --card:#0b1220;           /* deep panel */
+      --glass: rgba(2,6,23,.55);
+      --bg:#0b1020;             /* page bg */
+      --border:#1f2a44;
+    }
+    html,body{font-family:"Cairo",system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--ink)}
     .btn{height:40px; padding:0 14px; border-radius:14px; display:inline-flex; align-items:center; gap:.55rem; font-weight:700}
     .btn-primary{background:var(--brand); color:#fff} .btn-primary:hover{background:#0284c7}
     .btn-ghost{background:#f1f5f9} .btn-ghost:hover{background:#e2e8f0}
+    .dark .btn-ghost{background:#0f172a} .dark .btn-ghost:hover{background:#111827}
     .chip{font-size:11px; padding:4px 8px; border-radius:999px; background:#eef2ff; color:#334155}
+    .dark .chip{background:#0f172a; color:#cbd5e1}
     .hero{
       position:relative; border-radius:28px; overflow:hidden; min-height:240px;
       background: radial-gradient(1200px 600px at 90% -10%, rgba(34,211,238,.18), transparent 60%),
                   radial-gradient(800px 800px at -10% 10%, rgba(14,165,233,.18), transparent 55%),
                   #eef6ff;
+    }
+    .dark .hero{
+      background: radial-gradient(1200px 600px at 90% -10%, rgba(34,211,238,.10), transparent 60%),
+                  radial-gradient(800px 800px at -10% 10%, rgba(14,165,233,.08), transparent 55%),
+                  #0b1220;
     }
     .hero::before{
       content:""; position:absolute; inset:0;
@@ -48,7 +70,9 @@
       border:1px solid rgba(2,132,199,.08);
       box-shadow: 0 8px 24px rgba(15,23,42,.06);
     }
-    .card{ background:var(--card); border:1px solid #e6eef6; border-radius:24px; box-shadow:0 10px 30px rgba(15,23,42,.04)}
+    .dark .glass{ border-color: rgba(14,165,233,.18); box-shadow: 0 8px 24px rgba(0,0,0,.35);}
+    .card{ background:var(--card); border:1px solid var(--border); border-radius:24px; box-shadow:0 10px 30px rgba(15,23,42,.04)}
+    .dark .card{ box-shadow: 0 16px 40px rgba(0,0,0,.35);}    
     .icon-pill{
       width:44px;height:44px;border-radius:14px;
       background:linear-gradient(135deg,var(--brand),var(--brand-2));
@@ -62,7 +86,7 @@
 <body>
 
   <!-- NAV -->
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/70 backdrop-blur border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <img id="logo" src="assets/logo.png" alt="Logo" class="w-10 h-10 rounded-xl ring-2 ring-sky-200 object-contain bg-white p-1"
@@ -72,7 +96,11 @@
           <p class="text-[11px] text-slate-500 -mt-1">PTW Center</p>
         </div>
       </div>
-      <span class="hidden md:inline text-xs text-slate-500">آخر تحديث: <span id="lastUpdate"></span></span>
+
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" class="btn btn-ghost h-9 px-3 text-sm" title="الوضع الداكن">🌙</button>
+        <span class="hidden md:inline text-xs text-slate-500">آخر تحديث: <span id="lastUpdate"></span></span>
+      </div>
     </div>
   </header>
 
@@ -84,15 +112,24 @@
         <div class="icon-pill">🛡️</div>
         <div>
           <h2 class="text-2xl md:text-3xl font-black">لوحة الوصول السريع لتصاريح الأعمال</h2>
-          <p class="text-slate-600 text-sm">روابط مباشرة ونسخ سريع.</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">روابط مباشرة ونسخ سريع.</p>
         </div>
       </div>
       <div class="mt-4 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
         <input id="search" type="search" placeholder="ابحث باسم التصريح أو الكود (GWP, WAH, …)"
-               class="w-full md:w-[520px] h-11 rounded-2xl border px-3 outline-none focus:ring-2 focus:ring-sky-300 bg-white"/>
+               class="w-full md:w-[520px] h-11 rounded-2xl border border-slate-200 dark:border-slate-700 px-3 outline-none focus:ring-2 focus:ring-sky-300 bg-white dark:bg-slate-900 dark:text-slate-100"/>
       </div>
     </div>
+  </section>
+
+  <!-- FAVS -->
+  <section class="max-w-7xl mx-auto px-4" id="favSection" style="display:none;">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="icon-pill text-base">⭐</div>
+      <h3 class="font-black text-lg">المفضلة</h3>
+    </div>
+    <div id="favCards" class="grid-cards mb-6"></div>
   </section>
 
   <!-- GRID -->
@@ -107,20 +144,20 @@
       <div id="resources" class="grid sm:grid-cols-2 gap-4"></div>
     </section>
 
-    <footer class="mt-10 text-xs text-slate-500 border-t pt-4">
+    <footer class="mt-10 text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800 pt-4">
       © <span id="year"></span>   Ahmed El-Basha - جميع الحقوق محفوظة
     </footer>
   </main>
 
   <!-- SCRIPTS -->
   <script>
-    // بيانات التصاريح
+    // ===== بيانات التصاريح =====
     const permits = [
       { id:'PTW-GWP',  titleAr:'تصريح عمل عام (GWP)',       title:'PTW – GWP',         tag:'GWP', href:'https://script.google.com/macros/s/AKfycbyWrievOKw_XXJRS2E30P8VsG5f3WjilJoORpfplM0EFuw77zgre8sQwYjnyBHAXKoy/exec' },
       { id:'WAH-PTW',  titleAr:'تصريح العمل على ارتفاع (WAH)', title:'PTW – WAH',         tag:'WAH', href:'https://script.google.com/macros/s/AKfycbwVaSmrvgSG_KyhHaBGnrVcQVW_trdva1Vkk3d2sxlqjW8RC16iVNikjphQ-TSNyj7X/exec' },
-      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'CSE – Elbasha', tag:'CSE', href:'https://script.google.com/macros/s/AKfycbxFfOIG6s8tDdAArAzmAoYUuqnW0zQGv7RsnQMrdlcwuae30_5FYDSNyvXs2V7JLyX0/exec' },
-      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Excavation',  tag:'EXC', href:'https://script.google.com/macros/s/AKfycbzeNCkVOGRq4I2DAnsP_rwtyJsH95-qrdpDH7SGtU9pKHCssDmGFeMi_LCVAym_pamz/exec' },
-      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – Hot Work',    tag:'HWP', href:'https://script.google.com/macros/s/AKfycbyj16dWBfMwWn5htsSTpgnjJR_VGshTiyn3pYA-_GRKSUUaNmngJIqBl8L2df8nwmKpQw/exec' },
+      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'PTW - CSE', tag:'CSE', href:'https://script.google.com/macros/s/AKfycbxFfOIG6s8tDdAArAzmAoYUuqnW0zQGv7RsnQMrdlcwuae30_5FYDSNyvXs2V7JLyX0/exec' },
+      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Exc',  tag:'EXC', href:'https://script.google.com/macros/s/AKfycbzeNCkVOGRq4I2DAnsP_rwtyJsH95-qrdpDH7SGtU9pKHCssDmGFeMi_LCVAym_pamz/exec' },
+      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – HWP',    tag:'HWP', href:'https://script.google.com/macros/s/AKfycbyj16dWBfMwWn5htsSTpgnjJR_VGshTiyn3pYA-_GRKSUUaNmngJIqBl8L2df8nwmKpQw/exec' },
       { id:'PTW-LOP',  titleAr:'تصريح أعمال الرفع (LOP)', title:'PTW – LOP', tag:'LOP', href:'https://script.google.com/macros/s/AKfycbyqJipVrchzNaCGgyi-vRgmbKZA52uhOguv9eRM46FzJbrj2hxl0rAtqwogA8lqmgorQQ/exec' },
     ];
 
@@ -129,20 +166,53 @@
       { id:'LOG', titleAr:'سجل التصاريح',       title:'Permit Log',             href:'https://najran-ptw.glide.page/dl/8aba19' },
     ];
 
-    const cards = document.getElementById('cards');
-    const resWrap = document.getElementById('resources');
-    const search = document.getElementById('search');
+    // ===== عناصر DOM =====
+    const cards     = document.getElementById('cards');
+    const favCards  = document.getElementById('favCards');
+    const favSection= document.getElementById('favSection');
+    const resWrap   = document.getElementById('resources');
+    const search    = document.getElementById('search');
 
-    function copy(text){ navigator.clipboard.writeText(text); toast('تم النسخ'); }
+    // ===== مفضلة محلية =====
+    const FAV_KEY = 'ptw_favorites_v1';
+    const favIds = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+    function persistFavs(){ localStorage.setItem(FAV_KEY, JSON.stringify([...favIds])); }
+
+    // ===== ثيم (داكن/فاتح) =====
+    const THEME_KEY = 'ptw_theme_v1';
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(t){
+      const root=document.documentElement;
+      if(t==='dark'){ root.classList.add('dark'); themeToggle.textContent='☀️'; }
+      else { root.classList.remove('dark'); themeToggle.textContent='🌙'; }
+      localStorage.setItem(THEME_KEY,t);
+    }
+    const savedTheme = localStorage.getItem(THEME_KEY) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+    themeToggle.addEventListener('click',()=>applyTheme(document.documentElement.classList.contains('dark')?'light':'dark'));
+
+    // ===== Toast بسيط =====
     function toast(msg){
       const t=document.createElement('div');
       t.textContent=msg; t.style.cssText="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0ea5e9;color:#fff;padding:8px 14px;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.15);font-weight:700;z-index:9999";
       document.body.appendChild(t); setTimeout(()=>t.remove(),1200);
     }
 
+    function copy(text){ navigator.clipboard.writeText(text); toast('تم النسخ'); }
+
+    // ===== بطاقة تصريح =====
+    function isFav(id){ return favIds.has(id); }
+    function toggleFav(id){
+      if(isFav(id)) favIds.delete(id); else favIds.add(id);
+      persistFavs();
+      render(currentFiltered);
+      renderFavs();
+    }
+
     function card(item){
       const el = document.createElement('div');
       el.className = 'card p-4';
+      const favActive = isFav(item.id);
       el.innerHTML = `
         <div class="flex items-start gap-3">
           <div class="icon-pill">🧷</div>
@@ -152,7 +222,10 @@
                 <h3 class="font-bold text-base truncate">${item.titleAr}</h3>
                 <p class="text-[11px] text-slate-500 truncate">${item.title}</p>
               </div>
-              <span class="chip">${item.tag}</span>
+              <div class="flex items-center gap-2">
+                <button class="h-8 w-8 rounded-xl border border-slate-200 dark:border-slate-700 grid place-items-center" title="إضافة للمفضلة" data-fav="${item.id}">${favActive?'⭐':'☆'}</button>
+                <span class="chip">${item.tag}</span>
+              </div>
             </div>
             <div class="mt-3 flex items-center gap-2 flex-wrap">
               <a href="${item.href}" target="_blank" class="btn btn-primary" rel="noopener">فتح النموذج</a>
@@ -160,6 +233,13 @@
             </div>
           </div>
         </div>`;
+
+      // ربط زر المفضلة
+      setTimeout(()=>{
+        const btn = el.querySelector(`[data-fav="${item.id}"]`);
+        if(btn) btn.addEventListener('click',()=>toggleFav(item.id));
+      });
+
       return el;
     }
 
@@ -181,10 +261,26 @@
       return el;
     }
 
-    function render(list){ cards.innerHTML=''; list.forEach(i=>cards.appendChild(card(i))); }
+    // ===== بحث + رندر =====
+    let currentFiltered = [...permits];
+    function render(list){
+      cards.innerHTML='';
+      list.forEach(i=>cards.appendChild(card(i)));
+      currentFiltered = list;
+    }
+    function renderFavs(){
+      const favList = permits.filter(p=>isFav(p.id));
+      if(favList.length){
+        favSection.style.display='block';
+        favCards.innerHTML='';
+        favList.forEach(i=>favCards.appendChild(card(i)));
+      } else {
+        favSection.style.display='none';
+        favCards.innerHTML='';
+      }
+    }
     function renderExtra(){ resWrap.innerHTML=''; extra.forEach(x=>resWrap.appendChild(resource(x))); }
 
-    // بحث
     function applyFilter(){
       const q = (search.value||'').toLowerCase().trim();
       const f = permits.filter(p => [p.id,p.title,p.titleAr,p.tag].join(' ').toLowerCase().includes(q));
@@ -192,15 +288,32 @@
     }
     search.addEventListener('input', applyFilter);
 
-    // Init
+    // ===== اختصارات لوحة المفاتيح =====
+    window.addEventListener('keydown',(e)=>{
+      const active = document.activeElement;
+      const inTyping = active && (active.tagName==='INPUT' || active.tagName==='TEXTAREA' || active.isContentEditable);
+
+      // التركيز على البحث عند الضغط على '/'
+      if(e.key === '/' && !inTyping){ e.preventDefault(); search.focus(); }
+
+      // Enter داخل البحث يفتح أول نتيجة
+      if(e.key==='Enter' && active===search){
+        e.preventDefault();
+        const first = currentFiltered[0];
+        if(first && first.href){ window.open(first.href,'_blank','noopener'); }
+      }
+    });
+
+    // ===== Init =====
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ar-EG');
 
-    // لو فشل اللوجو في assets استخدم نسخة الجذر + حدّث فاف آيكون
+    // fallback للّوجو + تحديث الفافيكون
     const fav = document.getElementById('favicon');
     document.getElementById('logo').addEventListener('error', ()=>{ document.getElementById('logo').src='./logo.png'; fav.href='./logo.png'; });
 
     render(permits);
+    renderFavs();
     renderExtra();
   </script>
 </body>

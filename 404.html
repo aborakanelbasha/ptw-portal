@@ -81,19 +81,6 @@
     .grid-cards{display:grid; gap:16px}
     @media (min-width:640px){ .grid-cards{grid-template-columns:repeat(2,1fr)} }
     @media (min-width:1024px){ .grid-cards{grid-template-columns:repeat(3,1fr)} }
-      /* ===== Animations & Skeleton ===== */
-    .fade-in{opacity:0; transform:translateY(6px); animation:fadeIn .45s ease forwards}
-    @keyframes fadeIn{to{opacity:1; transform:none}}
-
-    .skeleton{ position:relative; overflow:hidden;}
-    .skeleton::before{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(148,163,184,.18), rgba(148,163,184,.08), rgba(148,163,184,.18)); transform:translateX(-100%); animation:shimmer 1.2s infinite; }
-    .dark .skeleton::before{ background:linear-gradient(90deg, rgba(51,65,85,.35), rgba(51,65,85,.15), rgba(51,65,85,.35)); }
-    @keyframes shimmer{ 100%{ transform:translateX(100%);} }
-
-    /* Accessible motion */
-    @media (prefers-reduced-motion: reduce){
-      *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important }
-    }
   </style>
 </head>
 <body>
@@ -132,30 +119,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/></svg>
         <input id="search" type="search" placeholder="ابحث باسم التصريح أو الكود (GWP, WAH, …)"
                class="w-full md:w-[520px] h-11 rounded-2xl border border-slate-200 dark:border-slate-700 px-3 outline-none focus:ring-2 focus:ring-sky-300 bg-white dark:bg-slate-900 dark:text-slate-100"/>
-            <!-- Welcome Banner -->
-      <div class="mt-4 grid sm:grid-cols-2 gap-3">
-        <div class="card p-4 bg-gradient-to-br from-sky-50 to-cyan-50 dark:from-slate-900 dark:to-slate-900/60 border-sky-100 dark:border-slate-700">
-          <div class="flex items-start gap-3">
-            <div class="icon-pill">👋</div>
-            <div class="flex-1 min-w-0">
-              $1
-              <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">استخدم البطاقات أدناه لإنشاء التصريح المناسب. بعد إدخال البيانات اضغط <strong>Generate PDF</strong> للطباعة أو المشاركة.</p>
-            </div>
-          </div>
-        </div>
-        <div class="card p-4 border-dashed">
-          <div class="flex items-start gap-3">
-            <div class="icon-pill">💡</div>
-            <div class="flex-1 min-w-0">
-              <h3 class="font-black">نصائح سريعة</h3>
-              <ul class="text-sm text-slate-600 dark:text-slate-300 mt-1 list-disc pr-5 leading-7">
-                <li>اضغط <kbd class="px-1 rounded bg-slate-100 dark:bg-slate-800">/</kbd> للبحث فورًا.</li>
-                <li>اضغط <kbd class="px-1 rounded bg-slate-100 dark:bg-slate-800">Enter</kbd> لفتح أول نتيجة.</li>
-                <li>بدّل الوضع <span class="px-1 rounded bg-slate-100 dark:bg-slate-800">فاتح/داكن</span> من الزر أعلى يمين.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -171,19 +134,7 @@
 
   <!-- GRID -->
   <main class="max-w-7xl mx-auto px-4 pb-14">
-    $1
-
-    <!-- HOW TO USE -->
-    $1
-              <li>اختر نوع التصريح المناسب من البطاقات بالأعلى.</li>
-              <li>املأ الحقول المطلوبة بدقة، وتأكد من الأسماء والتواريخ.</li>
-              <li>اضغط <strong>Generate PDF</strong> لتحصل على التصريح وتقوم بطباعته أو مشاركته.</li>
-            $2
-            <p class="text-xs text-slate-500 mt-2">تلميح: بإمكانك تبديل الوضع الداكن/الفاتح وسيتم حفظ تفضيلاتك تلقائيًا على هذا المتصفح.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="cards" class="grid-cards"></div>
 
     <section class="mt-8">
       <div class="flex items-center gap-2 mb-3">
@@ -204,9 +155,9 @@
     const permits = [
       { id:'PTW-GWP',  titleAr:'تصريح عمل عام (GWP)',       title:'PTW – GWP',         tag:'GWP', href:'https://script.google.com/macros/s/AKfycbyWrievOKw_XXJRS2E30P8VsG5f3WjilJoORpfplM0EFuw77zgre8sQwYjnyBHAXKoy/exec' },
       { id:'WAH-PTW',  titleAr:'تصريح العمل على ارتفاع (WAH)', title:'PTW – WAH',         tag:'WAH', href:'https://script.google.com/macros/s/AKfycbwVaSmrvgSG_KyhHaBGnrVcQVW_trdva1Vkk3d2sxlqjW8RC16iVNikjphQ-TSNyj7X/exec' },
-      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'PTW - CSE', tag:'CSE', href:'https://script.google.com/macros/s/AKfycbxFfOIG6s8tDdAArAzmAoYUuqnW0zQGv7RsnQMrdlcwuae30_5FYDSNyvXs2V7JLyX0/exec' },
-      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Exc',  tag:'EXC', href:'https://script.google.com/macros/s/AKfycbzeNCkVOGRq4I2DAnsP_rwtyJsH95-qrdpDH7SGtU9pKHCssDmGFeMi_LCVAym_pamz/exec' },
-      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – HWP',    tag:'HWP', href:'https://script.google.com/macros/s/AKfycbyj16dWBfMwWn5htsSTpgnjJR_VGshTiyn3pYA-_GRKSUUaNmngJIqBl8L2df8nwmKpQw/exec' },
+      { id:'ELBASHA-CSE', titleAr:'تصريح الدخول للأماكن المغلقة (CSE)', title:'CSE – Elbasha', tag:'CSE', href:'https://script.google.com/macros/s/AKfycbxFfOIG6s8tDdAArAzmAoYUuqnW0zQGv7RsnQMrdlcwuae30_5FYDSNyvXs2V7JLyX0/exec' },
+      { id:'EXC-PTW',  titleAr:'تصريح الحفر (EXC)',          title:'PTW – Excavation',  tag:'EXC', href:'https://script.google.com/macros/s/AKfycbzeNCkVOGRq4I2DAnsP_rwtyJsH95-qrdpDH7SGtU9pKHCssDmGFeMi_LCVAym_pamz/exec' },
+      { id:'HWP-PTW',  titleAr:'تصريح الأعمال الساخنة (HWP)', title:'PTW – Hot Work',    tag:'HWP', href:'https://script.google.com/macros/s/AKfycbyj16dWBfMwWn5htsSTpgnjJR_VGshTiyn3pYA-_GRKSUUaNmngJIqBl8L2df8nwmKpQw/exec' },
       { id:'PTW-LOP',  titleAr:'تصريح أعمال الرفع (LOP)', title:'PTW – LOP', tag:'LOP', href:'https://script.google.com/macros/s/AKfycbyqJipVrchzNaCGgyi-vRgmbKZA52uhOguv9eRM46FzJbrj2hxl0rAtqwogA8lqmgorQQ/exec' },
     ];
 
@@ -220,34 +171,6 @@
     const favCards  = document.getElementById('favCards');
     const favSection= document.getElementById('favSection');
     const resWrap   = document.getElementById('resources');
-
-    // ===== Skeleton Helpers =====
-    function skeletonCard(){
-      const el = document.createElement('div');
-      el.className='card p-4 fade-in';
-      el.innerHTML = `
-        <div class="flex items-start gap-3">
-          <div class="icon-pill skeleton"></div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center justify-between gap-2">
-              <div class="min-w-0 w-full">
-                <div class="h-4 w-1/2 rounded skeleton mb-2"></div>
-                <div class="h-3 w-1/3 rounded skeleton"></div>
-              </div>
-              <span class="chip skeleton" style="display:inline-block; width:48px; height:22px"></span>
-            </div>
-            <div class="mt-3 flex items-center gap-2 flex-wrap">
-              <div class="h-10 w-28 rounded-xl skeleton"></div>
-              <div class="h-10 w-28 rounded-xl skeleton"></div>
-            </div>
-          </div>
-        </div>`;
-      return el;
-    }
-    function showSkeleton(container, count=6){
-      container.innerHTML='';
-      for(let i=0;i<count;i++) container.appendChild(skeletonCard());
-    }
     const search    = document.getElementById('search');
 
     // ===== مفضلة محلية =====
@@ -342,9 +265,8 @@
     let currentFiltered = [...permits];
     function render(list){
       cards.innerHTML='';
-      list.forEach(i=>{ const c = card(i); c.classList.add('fade-in'); cards.appendChild(c); });
+      list.forEach(i=>cards.appendChild(card(i)));
       currentFiltered = list;
-      revealOnScroll();
     }
     function renderFavs(){
       const favList = permits.filter(p=>isFav(p.id));
@@ -357,10 +279,7 @@
         favCards.innerHTML='';
       }
     }
-    function renderExtra(){
-      resWrap.innerHTML='';
-      extra.forEach(x=>{ const r = resource(x); r.classList.add('fade-in'); resWrap.appendChild(r); });
-    }
+    function renderExtra(){ resWrap.innerHTML=''; extra.forEach(x=>resWrap.appendChild(resource(x))); }
 
     function applyFilter(){
       const q = (search.value||'').toLowerCase().trim();
@@ -385,15 +304,6 @@
       }
     });
 
-    // ===== Reveal on scroll =====
-    function revealOnScroll(){
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('fade-in'); obs.unobserve(e.target); } });
-      },{ threshold:.08 });
-      document.querySelectorAll('.card').forEach(c=>obs.observe(c));
-    }
-
     // ===== Init =====
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('ar-EG');
@@ -402,8 +312,9 @@
     const fav = document.getElementById('favicon');
     document.getElementById('logo').addEventListener('error', ()=>{ document.getElementById('logo').src='./logo.png'; fav.href='./logo.png'; });
 
-    showSkeleton(cards, Math.min(permits.length, 6));
-    setTimeout(()=>{ render(permits); renderFavs(); renderExtra(); }, 260);
+    render(permits);
+    renderFavs();
+    renderExtra();
   </script>
 </body>
 </html>
